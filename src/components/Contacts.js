@@ -29,11 +29,11 @@ class Contacts extends Component {
     render() {
         const { contacts } = this.state;
         return (
-            <div className="container">
+            <React.Fragment>
                 {contacts.map(contact => {
                     return <Contact key={contact.id} contact={contact} />
                 })}
-            </div>
+            </React.Fragment>
         )
     }
 }
