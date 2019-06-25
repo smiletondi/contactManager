@@ -13,7 +13,6 @@ class Contact extends Component {
         this.setState({
             displayContactInfo: !this.state.displayContactInfo
         });
-        console.log(this.state);
     };
     onDeleteClick = (id, dispatch) => {
         dispatch({
