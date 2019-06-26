@@ -62,7 +62,10 @@ class AddContact extends Component {
             name: '',
             email: '',
             phone: ''
-        })
+        });
+
+        // Redirection
+        this.props.history.push('/');
     };
 
     render() {
