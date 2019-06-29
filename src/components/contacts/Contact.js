@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'
 
 import { Consumer } from '../../context';
+import Axios from 'axios';
 
 
 class Contact extends Component {
@@ -15,10 +17,16 @@ class Contact extends Component {
         });
     };
     onDeleteClick = (id, dispatch) => {
-        dispatch({
-            type: 'DELETE_CONTACT',
-            payload: id
-        })
+        Axios({
+            method: 'DELETE',
+            url: 'https://jsonplaceholder.typicode.com/users/' + id
+        }).then(resp => {
+            console.log('deleted successfully' + resp);
+            return dispatch({
+                type: 'DELETE_CONTACT',
+                payload: id
+            });
+        }).catch(err => console.error(err));
     };
     render() {
         const { id, name, email, phone } = this.props.contact;
@@ -30,16 +38,25 @@ class Contact extends Component {
                         <div className="card card-body mb-3">
                             <h4>
                                 {name + " "}
-                                { this.state.displayContactInfo? (<i className="fas fa-sort-up" onClick={this.onShowClick}
+                                {this.state.displayContactInfo ? (<i className="fas fa-sort-up" onClick={this.onShowClick}
                                     style={{ cursor: "pointer" }} />) : (<i className="fas fa-sort-down" onClick={this.onShowClick}
-                                    style={{ cursor: "pointer" }} />)}
+                                        style={{ cursor: "pointer" }} />)}
                                 <i className="fas fa-times" onClick={this.onDeleteClick.bind(this, id, dispatch)}
                                     style={{ cursor: "pointer", float: "right", color: "orange" }} />
+
+                                <Link to={`/contact/edit/${id}`} >
+                                    <i  className="fas fa-pencil-alt" style={{ cursor: "pointer", float: "right", color: "black", marginRight: '1rem' }} >
+
+                                    </i>
+                                </Link>
+
                             </h4>
-                            {displayContactInfo ? (<ul className="list-group">
-                                <li className="list-group-item">Email: {email}</li>
-                                <li className="list-group-item">Phone: {phone}</li>
-                            </ul>) : null}
+                            {
+                                displayContactInfo ? (<ul className="list-group">
+                                    <li className="list-group-item">Email: {email}</li>
+                                    <li className="list-group-item">Phone: {phone}</li>
+                                </ul>) : null
+                            }
 
                         </div>
                     )
