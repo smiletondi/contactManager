@@ -18,7 +18,7 @@ function App() {
 
   return (
     <Provider>
-      <Router>
+      <Router basename="/contactManager">
         <div className="App">
           <Header branding="Contact Manger" />
           <div className="container">
